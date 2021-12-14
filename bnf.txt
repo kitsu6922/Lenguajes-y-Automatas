@@ -1,11 +1,19 @@
-statement ::=   "PRINT" ( expresion | string ) nl |
-                "IF" comparacion "THEN" nl {statement} "ENDIF" nl |
-                "WHILE" comparacion "REPEAT" nl {statement} "ENDWHILE" nl |
-                "LABEL" ident nl |
-                "LET" ident "=" expresion nl |
-comparacion ::= expresion ( ("==" | "!=" | ">" | "<" | ">=" | "<=" ) expresion)+
-expresion ::= term {( "+" | "-" )term}
-term ::= unary { [ "/" | "*" ] unary }
-unary ::= [ "+" | "-" ] primary
-primary ::= number | ident
-nl ::= '\n'+
+STATEMENT     ::=  (([VD | CP | DEN] NUMBER [TL {PAYMENTS}]) |
+                   (CSP NUMBER) |
+                   PAYMENTS | 
+                   SUPERVISOR |
+                   COMMANDS |
+                   PMMS |
+                   SERVICES |
+                   FYV |
+                   WHITHDRAWALS) nl
+PAYMENTS      ::=  [VD] NUMBER (CA | TB | QR | AZ)
+PMMS          ::=  [VD | CP] NUMBER MM NUMBER  [TL {PAYMENTS}]
+FYV           ::=  FV ( NUMBER | STRING )
+SUPERVISOR    ::=  SS (((SUSPENDER | RECUPERAR | REIMPRIMIR | CT) NUMBER) | EDC)
+COMMANDS      ::=  TL | BA
+SERVICES      ::=  [VD] PS (PAYCASH | CB | CFE | SKY | MEGACABLE | INFONAVIT ) NUMBER [NUMBER] [TL {PAYMENTS}]
+WHITHDRAWALS  ::=  [VD] PR NUMBER ( MP | CREDIMEX | TSV | TCV | BONOMATIC | EFECTIVO | VALES )
+nl            ::=  '\n'+
+
+            
